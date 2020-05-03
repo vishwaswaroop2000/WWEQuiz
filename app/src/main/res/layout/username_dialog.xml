@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="409dp"
+    android:layout_height="729dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="1dp"
+    android:layout_marginLeft="1dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginEnd="1dp"
+    android:layout_marginRight="1dp"
+    android:layout_marginBottom="1dp"
+    android:orientation="vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:padding="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Enter new user name"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="283dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="284dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Go!" />
+    </LinearLayout>
