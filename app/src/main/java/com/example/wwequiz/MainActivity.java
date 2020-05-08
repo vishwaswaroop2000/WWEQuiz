@@ -1,7 +1,10 @@
 package com.example.wwequiz;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +31,7 @@ import com.example.wwequiz.HelperForUserDB;
 public class MainActivity extends AppCompatActivity {
 
     HelperForUserDB helperForUserDB;
+    ListView listView;
 
     @Override
     public void onResume(){
@@ -42,19 +46,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         helperForUserDB = new HelperForUserDB(this);
         fillUsers();
+
     }
 
     public void fillUsers(){
         ArrayList<User> users = helperForUserDB.getUsers();
         Log.i("Length", String.valueOf(users.size()));
         if(users.size()>0) {
-            ListView listView = (ListView) findViewById(R.id.userListView);
+            listView = (ListView) findViewById(R.id.userListView);
             final ArrayList<String> userNames = new ArrayList<>();
             for (User user:users) {
                 userNames.add(user.getName());
             }
             ArrayAdapter<String> userArrayAdapter =
-                    new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,userNames);
+                    new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,userNames);
             listView.setAdapter(userArrayAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 import com.example.wwequiz.HelperForUserDB;
-import com.example.wwequiz.UserTableModel.*;
 
 public class UserContentProvider extends ContentProvider {
 
@@ -17,23 +16,21 @@ public class UserContentProvider extends ContentProvider {
 
     private static final String AUTHORITY =
             "com.example.wwequiz.provider.UserContentProvider";
-    private static final String USERS_TABLE = UsersTable.TABLE_NAME;
+    private static final String USERS_TABLE = HelperForUserDB.TABLE_NAME;
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + USERS_TABLE);
 
     private static final UriMatcher URIMatcher =
             new UriMatcher(UriMatcher.NO_MATCH);
 
     private static final int USERS = 0;
-    private static final int ID = 1;
-    private static final int USERNAME = 2;
-    private static final int LEVEL = 3;
-    private static final int EASYHS = 4;
-    private static final int MEDIUMHS = 5;
-    private static final int HARDHS = 6;
+    private static final int USERNAME = 1;
+    private static final int LEVEL = 2;
+    private static final int EASYHS = 3;
+    private static final int MEDIUMHS = 4;
+    private static final int HARDHS = 5;
 
     static {
         URIMatcher.addURI(AUTHORITY, USERS_TABLE, USERS);
-        URIMatcher.addURI(AUTHORITY, USERS_TABLE +"/#", ID);
         URIMatcher.addURI(AUTHORITY, USERS_TABLE +"/#", USERNAME);
         URIMatcher.addURI(AUTHORITY, USERS_TABLE +"/#", LEVEL);
         URIMatcher.addURI(AUTHORITY, USERS_TABLE +"/#", EASYHS);
@@ -52,14 +49,16 @@ public class UserContentProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
 
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(UsersTable.TABLE_NAME);
+        queryBuilder.setTables(HelperForUserDB.TABLE_NAME);
         int CodeOfURI = URIMatcher.match(uri);
         switch (CodeOfURI) {
             case USERNAME:
-                queryBuilder.appendWhere(UsersTable.COLUMN_USERNAME + "=" + uri.getLastPathSegment());
+                queryBuilder.appendWhere(HelperForUserDB.COLUMN_USERNAME + "=" + uri.getLastPathSegment());
+                break;
+            case USERS:
                 break;
             default:
-                throw new IllegalArgumentException("Unknown URI");
+                throw new IllegalArgumentException("Unknown URI"+uri);
         }
 
         Cursor cursor = queryBuilder.query(userDB.getReadableDatabase(), projection, selection, selectionArgs, null, null, sortOrder);
@@ -74,7 +73,7 @@ public class UserContentProvider extends ContentProvider {
         long id = 0;
         switch (CodeOfURI) {
             case USERS:
-                id = sqlDB.insert(UsersTable.TABLE_NAME, null, values);
+                id = sqlDB.insert(HelperForUserDB.TABLE_NAME, null, values);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -87,14 +86,14 @@ public class UserContentProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         getContext().getContentResolver().notifyChange(uri, null);
-        return userDB.getWritableDatabase().update(UsersTable.TABLE_NAME, values,
+        return userDB.getWritableDatabase().update(HelperForUserDB.TABLE_NAME, values,
                 selection, selectionArgs);
     }
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         getContext().getContentResolver().notifyChange(uri, null);
-        return userDB.getWritableDatabase().delete(UsersTable.TABLE_NAME,
+        return userDB.getWritableDatabase().delete(HelperForUserDB.TABLE_NAME,
                 selection, selectionArgs);
     }
 

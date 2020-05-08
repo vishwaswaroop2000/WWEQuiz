@@ -9,11 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ViewProfileActivity"></activity>
+
         <provider
             android:name=".provider.UserContentProvider"
-            android:authorities="com.example.wwequiz.provider.userContentProvider"
+            android:authorities="com.example.wwequiz.provider.UserContentProvider"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true" />
 
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".MainActivity">
