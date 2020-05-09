@@ -132,6 +132,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="10dp"
+        android:onClick="startGame"
         android:padding="2dp"
         android:text="Start"
         app:layout_constraintBottom_toTopOf="@+id/profileViewer"

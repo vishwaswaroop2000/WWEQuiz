@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1082782167589",
+    "firebase_url": "https://wwe-quiz-be81d.firebaseio.com",
+    "project_id": "wwe-quiz-be81d",
+    "storage_bucket": "wwe-quiz-be81d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082782167589:android:62eac0320c3d94a88045cc",
+        "android_client_info": {
+          "package_name": "com.example.wwequiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082782167589-8s1schd09ht1f5ff0cdl951bero3vsg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wwequiz",
+            "certificate_hash": "0e07c1dcc65d9e4b13ef61bd6b7a8b8bbc82371a"
+          }
+        },
+        {
+          "client_id": "1082782167589-266vc0pl53m41mkou5fm3hpgteo5ot3c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHNusiWrJwIZYwdK6sykLmBoVe7uTCXhA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082782167589-266vc0pl53m41mkou5fm3hpgteo5ot3c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -15,6 +15,11 @@ public class WelcomeActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     String username;
+
+    public void startGame(View view){
+        Intent intent = new Intent(this,ImageQuiz.class);
+        startActivity(intent);
+    }
     public void setUsernameInActivity(String name) {
             TextView userWelcomeText = (TextView) findViewById(R.id.welcomer);
             userWelcomeText.setText("Welcome " + name+"!");
