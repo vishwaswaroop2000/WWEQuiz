@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/userguide"
+        android:title="User Guide"
+        android:background="@color/colorPrimary"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/shareaction"
         android:icon="@drawable/ic_share_black_24dp"
         android:title="shareaction"

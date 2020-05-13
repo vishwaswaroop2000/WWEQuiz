@@ -13,13 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FeedbackScreen"></activity>
-        <activity android:name=".FeedbackScree"></activity>
+        <activity android:name=".Webview"></activity>
+        <activity android:name=".FeedbackScreen" />
+        <activity android:name=".FeedbackScree" />
 
         <service
             android:name=".QuizService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity android:name=".AudioQuiz" />
         <activity android:name=".EasyQuiz" />

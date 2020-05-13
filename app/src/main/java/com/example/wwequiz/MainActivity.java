@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         shareActionProvider.setShareIntent(intent);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,16 +67,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         fillUsers();
         serviceSwitch = findViewById(R.id.serviceSwitch);
         sharedPreferences = this.getSharedPreferences("com.example.wwequiz.sharedpreferences", MODE_PRIVATE);
-        serviceSwitch.setChecked(sharedPreferences.getBoolean("service", true));
+        serviceSwitch.setChecked(sharedPreferences.getBoolean("service", false));
         serviceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     startService();
-                    sharedPreferences.edit().putBoolean("service",true);
+                    sharedPreferences.edit().putBoolean("service",true).apply();
                 }
                 else{
                     stopService();
-                    sharedPreferences.edit().putBoolean("service",false);
+                    sharedPreferences.edit().putBoolean("service",false).apply();
                 }
             }
         });
@@ -114,9 +115,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            Toast.makeText(MainActivity.this, users.get(viewHolder.getAdapterPosition()).getName()+" "+
-                    String.valueOf(viewHolder.getAdapterPosition()),
-                    Toast.LENGTH_SHORT).show();
             helperForUserDB.deleteUser(users.get(viewHolder.getAdapterPosition()).getName());
             users.remove(viewHolder.getAdapterPosition());
             recyclerViewAdapter.notifyDataSetChanged();
@@ -183,5 +181,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id==R.id.userguide){
+            Intent intent = new Intent(this, Webview.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
