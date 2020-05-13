@@ -1,37 +1,39 @@
 package com.example.wwequiz;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ShareActionProvider;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import com.example.wwequiz.HelperForUserDB;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewClickListener {
 
+    private ShareActionProvider shareActionProvider;
     HelperForUserDB helperForUserDB;
-    ListView listView;
+    Switch serviceSwitch;
+    SharedPreferences sharedPreferences;
+    RecyclerViewAdapter recyclerViewAdapter;
+    ArrayList<User> users;
 
     @Override
     public void onResume(){
@@ -39,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
         fillUsers();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.quiz_menu,menu);
+        MenuItem menuItem = menu.findItem(R.id.shareaction);
+        shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        setShareActionIntent("Hey there! Think you're the best fan of professional wreslting?" +
+                "Try this app to test your wrestler guessing skills! It has 3 levels and is challenging too!");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setShareActionIntent(String message){
+        Intent intent= new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT,message);
+        shareActionProvider.setShareIntent(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,33 +64,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         helperForUserDB = new HelperForUserDB(this);
         fillUsers();
+        serviceSwitch = findViewById(R.id.serviceSwitch);
+        sharedPreferences = this.getSharedPreferences("com.example.wwequiz.sharedpreferences", MODE_PRIVATE);
+        serviceSwitch.setChecked(sharedPreferences.getBoolean("service", true));
+        serviceSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    startService();
+                    sharedPreferences.edit().putBoolean("service",true);
+                }
+                else{
+                    stopService();
+                    sharedPreferences.edit().putBoolean("service",false);
+                }
+            }
+        });
+    }
 
+    public void startService() {
+        Intent serviceIntent = new Intent(this, QuizService.class);
+        ContextCompat.startForegroundService(this, serviceIntent);
+    }
+
+    public void stopService() {
+        Intent serviceIntent = new Intent(this, QuizService.class);
+        stopService(serviceIntent);
     }
 
     public void fillUsers(){
-        ArrayList<User> users = helperForUserDB.getUsers();
+        users = helperForUserDB.getUsers();
         Log.i("Length", String.valueOf(users.size()));
         if(users.size()>0) {
-            listView = (ListView) findViewById(R.id.userListView);
-            final ArrayList<String> userNames = new ArrayList<>();
-            for (User user:users) {
-                userNames.add(user.getName());
-            }
-            ArrayAdapter<String> userArrayAdapter =
-                    new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,userNames);
-            listView.setAdapter(userArrayAdapter);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                    try {
-                        goToWelcomeActivity(userNames.get(position));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            RecyclerView recyclerView = findViewById(R.id.recycler_view);
+            recyclerViewAdapter = new RecyclerViewAdapter(users,this,this);
+            recyclerView.setAdapter(recyclerViewAdapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerView);
+
         }
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Toast.makeText(MainActivity.this, users.get(viewHolder.getAdapterPosition()).getName()+" "+
+                    String.valueOf(viewHolder.getAdapterPosition()),
+                    Toast.LENGTH_SHORT).show();
+            helperForUserDB.deleteUser(users.get(viewHolder.getAdapterPosition()).getName());
+            users.remove(viewHolder.getAdapterPosition());
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
+    };
 
     public boolean isUserNameValid(String username) throws IOException {
         if(helperForUserDB.getUser(username)!=null){
@@ -125,5 +174,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    
+
+
+    @Override
+    public void recyclerViewListClicked(View v, String name) {
+        try {
+            goToWelcomeActivity(name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

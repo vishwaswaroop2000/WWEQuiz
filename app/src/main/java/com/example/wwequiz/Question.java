@@ -6,7 +6,7 @@ import java.net.URI;
 
 public class Question {
 
-    private Uri audioURI=null;
+    private String audioURI=null;
     private String imageURI=null;
     private String question;
     private String answer;
@@ -16,16 +16,6 @@ public class Question {
     private String option4;
 
     public Question(){}
-
-    public Question(Uri audioURI, String question, String answer, String option1, String option2, String option3) {
-        this.audioURI = audioURI;
-        this.question = question;
-        this.answer = answer;
-        this.option1 = option1;
-        this.option2 = option2;
-        this.option3 = option3;
-        this.option4 = answer;
-    }
 
     public Question(String imageURI, String question, String answer, String option1, String option2, String option3) {
         this.imageURI = imageURI;
@@ -101,11 +91,11 @@ public class Question {
         this.imageURI = imageURI;
     }
 
-    public Uri getAudioURI() {
+    public String getAudioURI() {
         return audioURI;
     }
 
-    public void setAudioURI(Uri audioURI) {
+    public void setAudioURI(String audioURI) {
         this.audioURI = audioURI;
     }
 }

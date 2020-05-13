@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".ImageQuiz">
+
+    <Button
+        android:id="@+id/option2"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageQuestion"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="241dp"
+        android:layout_marginLeft="241dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginBottom="441dp"
+        android:onClick="reflectAnswerAndGoNext"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/option3"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginBottom="342dp"
+        android:onClick="reflectAnswerAndGoNext"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/option1"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageQuestion"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="47dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginBottom="441dp"
+        android:onClick="reflectAnswerAndGoNext"
+        android:text="Button" />
+
+    <Button
+        android:id="@+id/option4"
+        android:layout_width="121dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="240dp"
+        android:layout_marginLeft="240dp"
+        android:layout_marginBottom="342dp"
+        android:onClick="reflectAnswerAndGoNext"
+        android:text="Button" />
+
+    <TextView
+        android:id="@+id/imageQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Who was something"
+        android:textSize="20dp" />
+
+</RelativeLayout>

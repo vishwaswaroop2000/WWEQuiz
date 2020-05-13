@@ -35,7 +35,7 @@ public class Uploader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_uploader);
-        databaseReference = FirebaseDatabase.getInstance().getReference("/Level2");
+        databaseReference = FirebaseDatabase.getInstance().getReference("/Level1");
         question = findViewById(R.id.editText2);
         answer = findViewById(R.id.editText3);
         option1 = findViewById(R.id.editText4);
