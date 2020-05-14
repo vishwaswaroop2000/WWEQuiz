@@ -45,7 +45,7 @@ public class ImageQuiz extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
-        if(questionNumber!=14) {
+        if(questionNumber<=14) {
             getQuestion(questionNumber);
         }
         else{

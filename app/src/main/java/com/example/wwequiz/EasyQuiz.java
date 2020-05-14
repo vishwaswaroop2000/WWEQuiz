@@ -42,7 +42,7 @@ public class EasyQuiz extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
-        if(questionNumber!=15) {
+        if(questionNumber<=14) {
             getQuestion(questionNumber);
         }
         else{

@@ -23,7 +23,7 @@ public class FeedbackScreen extends AppCompatActivity {
     private TextView wrongNumber;
     private RatingBar ratingBar;
 
-    private void goToMain(View v){
+    public void goToMain(View v){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

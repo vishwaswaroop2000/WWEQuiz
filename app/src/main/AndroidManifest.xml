@@ -13,9 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Webview"></activity>
+        <activity android:name=".Webview" />
         <activity android:name=".FeedbackScreen" />
-        <activity android:name=".FeedbackScree" />
 
         <service
             android:name=".QuizService"
@@ -26,7 +25,6 @@
         <activity android:name=".EasyQuiz" />
         <activity android:name=".LevelChooser" />
         <activity android:name=".ImageQuiz" />
-        <activity android:name=".Uploader" />
         <activity android:name=".ViewProfileActivity" />
 
         <provider

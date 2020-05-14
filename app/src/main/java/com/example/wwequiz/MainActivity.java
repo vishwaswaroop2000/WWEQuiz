@@ -135,10 +135,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewClick
         startActivity(intent);
     }
 
-    public void upload() {
-        Intent intent = new Intent(this, Uploader.class);
-        startActivity(intent);
-    }
+//
 
     //maybe change user name
     public void setUserName(View view){
